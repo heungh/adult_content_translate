@@ -51,4 +51,4 @@
 
 ## 결론
 Invocation Logging은 "사용량 측정"엔 충분히 신뢰할 만하고 Athena 한 번이면 사용자/일자/모델별 토큰·추정비용 대시보드 제작 가능.
-다만 Grok(Mantle)에는 적용 보장이 없고, 모든 모델에서 청구서와 100% 일치는 아니므로 **앱 레벨 usage 로깅 + Invocation Logging + 월말 Cost Explorer 대조**의 3중 운영이 가장 안전.
+다만 Grok(Mantle)에는 아직 적용되지 않았고(향후 어떻게 될지는 아직 예측 어려움), 모든 모델에서 청구서와 100% 일치는 아니므로 **앱 레벨 usage 로깅 + Invocation Logging + 월말 Cost Explorer 대조**의 3중 운영이 가장 안전.
