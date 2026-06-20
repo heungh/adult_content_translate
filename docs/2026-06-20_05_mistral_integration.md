@@ -30,8 +30,7 @@ mistral.devstral-2-123b                 (코딩 특화)
 
 ## 정책 강도 (성인 콘텐츠 처리)
 - Mistral은 Claude/OpenAI보다 정책이 느슨하지만 **무제한은 아님**. 매우 노골적 표현은 거부할 수 있음.
-- 한국어 품질: Mistral Large 3 / Ministral 14B는 문학 번역 품질이 양호. 다만 Cohere Command R+에 비해 검증된 사례 적음.
-- 실사용 가능성은 현재 앱에서 실제 데이터로 테스트해야 결론 가능.
+- 한국어 품질: Mistral Large 3 / Ministral 14B는 문학 번역 품질이 양호.  Cohere Command R+ 와 비교해보니 거의 비슷한 표현과 단어를 활용해서 정확하게 의미를 전달
 
 ## app.py 통합 변경 사항
 1. **`MistralBedrockTranslator(ExplicitTranslator)` 클래스 신규 추가**
