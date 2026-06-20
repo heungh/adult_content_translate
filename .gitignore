@@ -1,0 +1,40 @@
+# History folder (contains sensitive translated content)
+history/
+
+# Example folder - ignore all except README
+example/*
+!example/README.txt
+
+# Environment files
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+app_backup.py
+backup/
+
+# Claude Code local settings (may contain user-specific permissions/paths)
+.claude/
+
+# Streamlit cache
+.streamlit/
