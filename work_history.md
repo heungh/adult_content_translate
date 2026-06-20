@@ -12,3 +12,5 @@
 | 4 | Grok 토큰 사용량 / 비용 추적 방법 (팀·사용자·일자별) | [docs/2026-06-20_04_grok_cost_tracking.md](docs/2026-06-20_04_grok_cost_tracking.md) |
 | 5 | Mistral on Bedrock 사용 가능성 + app.py 통합 | [docs/2026-06-20_05_mistral_integration.md](docs/2026-06-20_05_mistral_integration.md) |
 | 6 | Bedrock Invocation Logging의 비용측정 실효성 | [docs/2026-06-20_06_invocation_logging.md](docs/2026-06-20_06_invocation_logging.md) |
+| 7 | Mantle(Grok) Invocation Logging 실측 검증 — 대조군 Mistral 1분 내, Grok 10분 0건 | [docs/2026-06-20_07_mantle_logging_empirical_test.md](docs/2026-06-20_07_mantle_logging_empirical_test.md) |
+| 8 | GitHub 업로드 작업 노트 — gitignore 강화, Code Defender 차단·우회, rebase 누락 사례 | [docs/2026-06-20_08_github_push_notes.md](docs/2026-06-20_08_github_push_notes.md) |
