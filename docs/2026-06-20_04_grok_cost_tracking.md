@@ -27,11 +27,12 @@ record = {
 - 장점: 팀/사용자/세션/문서ID 등 원하는 모든 차원으로 분해 가능, 가격표 변경 즉시 반영.
 - 영향 범위: `app.py`의 모델 호출 직후에 logger 1줄.
 
-### B. Bedrock Model Invocation Logging (보완)
+### B. Bedrock Model Invocation Logging — Grok에는 **불가** (실측 확정)
 Bedrock 콘솔 → Settings → "Model invocation logging" ON → CloudWatch Logs / S3 출력.
-- 모든 호출이 input / output / usage / IAM identity와 함께 자동 기록.
-- Athena로 `userIdentity.arn`, `modelId`, `inputTokenCount`, `outputTokenCount` 집계.
-- ⚠️ Mantle 엔드포인트에서도 logging이 적용되는지는 별도 검증 필요 (2026-06 현재 명시되어 있지 않음).
+- `bedrock-runtime` 모델(Claude, Mistral 등): 모든 호출이 input / output / usage / IAM identity와 함께 자동 기록. Athena로 집계 가능.
+- ❌ **Mantle 엔드포인트(Grok 4.3): 실측 결과 logging 안 됨** (2026-06-20 검증, 상세 → docs/2026-06-20_06_invocation_logging.md).
+  - Mistral us-east-1 대조군 1분 내 S3 기록, Grok us-west-2 동일 logging 설정에서 10분 0건.
+  - 즉 B는 Claude/Mistral/Cohere에는 유효한 보완책, **Grok에는 무효**.
 
 ### C. 사용자/팀별 Bedrock Long-term API Key 분리
 콘솔에서 IAM user/role별로 long-term API key 발급 → 키별 sourceIdentity가 CloudTrail에 남음.
