@@ -22,11 +22,19 @@
 
 ## 주의 (실제 청구서와 어긋날 수 있는 이유)
 
-### 1. Mantle 엔드포인트(Grok)는 별도 검증 필요
-- Bedrock Model Invocation Logging은 원래 `bedrock-runtime` (`InvokeModel`/`Converse`) 대상으로 설계.
-- Grok 4.3이 가는 `bedrock-mantle`은 신규 엔드포인트라 동일한 logging 메커니즘 적용 보장 없음.
-- 2026-06 현재 문서에 명시적 언급이 없고, 콘솔 logging 설정이 mantle 호출에도 적용되는지는 실제 로그를 켜서 호출해 봐야 확인 가능.
-- → **별도 검증 항목**.
+### 1. Mantle 엔드포인트(Grok)는 Invocation Logging 대상이 아님 (실측 확정)
+- Bedrock Model Invocation Logging은 `bedrock-runtime` (`InvokeModel`/`Converse`) 대상으로 설계되었고, Mantle은 포함되지 않음.
+
+**실측 (2026-06-20, us-west-2 S3 logging 활성 상태):**
+
+| 호출 | UTC 시각 | request-id | S3 도착 | 결과 |
+|------|---------|------------|---------|:----:|
+| Mistral `bedrock-runtime` (us-east-1, 대조군) | 01:52:34 | 4292e3a3-... | ~01:53:30 (1분 내) | ✅ |
+| Grok 4.3 `bedrock-mantle` (us-west-2) | 01:53:19 | req_6a6io... | **10분 동안 0건** | ❌ |
+
+- 추가로 그 직전 4일간(2026-06-16 ~ 06-20) Mantle 호출이 다수 있었음에도 us-west-2 S3 prefix는 06-16 05:10 UTC 이후 비어있음.
+- → 결론: **Mantle 호출은 같은 계정·같은 logging 설정으로도 잡히지 않음.** 별도 logging 메커니즘은 2026-06-20 현재 공개되지 않음.
+- → Grok 비용 추적은 본 문서 'A. 앱 레벨 usage 로깅'이 사실상 유일한 신뢰 가능 경로.
 
 ### 2. 가격 ≠ 청구서 (drift 가능성)
 - 가격 변동, 프로모션 크레딧, 약정 할인(Provisioned Throughput, Reserved), 캐시 토큰 할인 등이 적용되면 단순 "토큰×단가" 계산과 청구서가 어긋남.
@@ -46,7 +54,7 @@
 | 모델군 | 1차 측정 | 2차 보정 |
 |--------|----------|----------|
 | Claude / Mistral / Cohere (`bedrock-runtime`) | Invocation Logging → S3 → Athena | Cost Explorer 월말 대조 |
-| Grok (`bedrock-mantle`) | 앱 레벨 usage 로깅 (응답 `usage` 필드) | Mantle invocation logging 가능 여부 검증 후 보완 |
+| Grok (`bedrock-mantle`) | 앱 레벨 usage 로깅 (응답 `usage` 필드) — **유일 신뢰 가능 경로** (Mantle은 Bedrock Invocation Logging 미적용 실측 확인) |
 | 팀/사용자 차원 부여 | 앱이 `requestId` + `team` + `user_id`를 사이드 테이블에 기록 | invocation log와 `requestId`로 join |
 
 ## 결론
